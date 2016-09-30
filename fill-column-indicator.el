@@ -202,13 +202,24 @@ function `fci-mode' is run."
                  (integer :tag "Use a custom column"
                           :match (lambda (w val) (fci-posint-p val)))))
 
-(defcustom fci-rule-color "#cccccc"
+;;(defcustom fci-rule-color "#cccccc"
+(defcustom fci-rule-color (face-attribute 'default :foreground)
   "Color used to draw the fill-column rule.
 
 Changes to this variable do not take effect until the mode
 function `fci-mode' is run."
   :group 'fill-column-indicator
   :tag "Fill-column rule color"
+  :type 'color)
+
+;;(defcustom fci-rule-bg-color "#ffffff"
+(defcustom fci-rule-bg-color (face-attribute 'default :background)
+  "Background color used to draw the fill-column rule.
+
+Changes to this variable do not take effect until the mode
+function `fci-mode' is run."
+  :group 'fill-column-indicator
+  :tag "Fill-column rule background color"
   :type 'color)
 
 (defcustom fci-rule-width 1
@@ -533,6 +544,7 @@ on troubleshooting.)"
   ;; value for the variable; otherwise, the variable value must satisfy the
   ;; given predicate.
   (let ((checks '((fci-rule-color color-defined-p)
+		  (fci-rule-bg-color color-defined-p)
                   (fci-rule-column fci-posint-p t)
                   (fci-rule-width fci-posint-p t)
                   (fci-rule-character-color color-defined-p t)
@@ -659,6 +671,7 @@ rough heuristic.)"
               :data ,data
               :mask heuristic
               :foreground ,fci-rule-color
+	      :background ,fci-rule-bg-color
               :ascent center))))
 
 (defun fci-make-xpm-img ()
